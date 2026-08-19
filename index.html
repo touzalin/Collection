@@ -1,0 +1,4016 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ma Collection</title>
+
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#080809">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ma Collection">
+
+<style>
+:root{
+  --bg:#080809;
+  --panel:#111115;
+  --panel2:#17171c;
+  --text:#f4f4f1;
+  --muted:#85858d;
+  --border:#303038;
+  --red:#e52d35;
+  --yellow:#f0c52e;
+  --blue:#237bd3;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html,body{
+  min-height:100%;
+}
+
+body{
+  background:
+    radial-gradient(circle at 10% 0%,rgba(229,45,53,.055),transparent 28%),
+    radial-gradient(circle at 90% 100%,rgba(35,123,211,.055),transparent 30%),
+    var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+  overflow-x:hidden;
+}
+
+button,
+input,
+textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* ================================
+   GLOBAL
+================================ */
+
+.screen{
+  min-height:100vh;
+  max-width:1300px;
+  margin:auto;
+  padding:28px 24px 50px;
+}
+
+/* ================================
+   LOGO
+================================ */
+
+.topbar{
+  height:54px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:30px;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:18px;
+  font-weight:900;
+  letter-spacing:2.5px;
+}
+
+.logo-mark{
+  width:35px;
+  height:35px;
+  border-radius:9px;
+  border:1px solid #35353c;
+  background:#111115;
+  position:relative;
+  overflow:hidden;
+}
+
+.logo-mark:before{
+  content:"";
+  position:absolute;
+  width:6px;
+  height:45px;
+  background:var(--red);
+  left:8px;
+  top:-5px;
+  transform:rotate(34deg);
+}
+
+.logo-mark:after{
+  content:"";
+  position:absolute;
+  width:6px;
+  height:45px;
+  background:var(--yellow);
+  left:20px;
+  top:-5px;
+  transform:rotate(34deg);
+}
+
+/* ================================
+   ACCUEIL
+================================ */
+
+.home{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+.home-content{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding-bottom:80px;
+}
+
+.home-title{
+  margin-bottom:50px;
+}
+
+.home-title h1{
+  font-size:clamp(45px,8vw,90px);
+  line-height:.9;
+  letter-spacing:-5px;
+  text-transform:uppercase;
+}
+
+.home-title .line{
+  width:100px;
+  height:4px;
+  margin-top:25px;
+  background:linear-gradient(
+    90deg,
+    var(--red) 0 33%,
+    var(--yellow) 33% 66%,
+    var(--blue) 66% 100%
+  );
+}
+
+.universe-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:22px;
+  max-width:900px;
+}
+
+.universe{
+  min-height:300px;
+  position:relative;
+  overflow:hidden;
+  border-radius:22px;
+  border:1px solid #303038;
+  background:linear-gradient(145deg,#17171c,#0c0c0f);
+  color:var(--text);
+  text-align:left;
+  transition:.25s;
+}
+
+.universe:hover{
+  transform:translateY(-7px);
+  border-color:#57575f;
+  box-shadow:0 30px 70px rgba(0,0,0,.5);
+}
+
+.universe:before{
+  content:"";
+  position:absolute;
+  width:260px;
+  height:260px;
+  border-radius:50%;
+  filter:blur(75px);
+  opacity:.17;
+}
+
+.universe.marvel:before{
+  background:var(--red);
+  right:-90px;
+  top:-90px;
+}
+
+.universe.dc:before{
+  background:var(--blue);
+  left:-90px;
+  bottom:-90px;
+}
+
+.universe-inner{
+  position:relative;
+  z-index:2;
+  min-height:300px;
+  padding:30px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+
+.universe h2{
+  font-size:58px;
+  letter-spacing:-4px;
+  text-transform:uppercase;
+}
+
+.universe-bottom{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.universe-count{
+  color:#777780;
+  font-size:12px;
+}
+
+.enter{
+  width:46px;
+  height:46px;
+  border:1px solid #42424a;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:.2s;
+}
+
+.universe:hover .enter{
+  background:#f0f0ec;
+  color:#080809;
+}
+
+/* ================================
+   COLLECTION
+================================ */
+
+.collection-title{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  margin-bottom:16px;
+}
+
+.collection-title h1{
+  font-size:clamp(38px,6vw,64px);
+  line-height:.9;
+  text-transform:uppercase;
+  letter-spacing:-4px;
+}
+
+.accent-line{
+  width:100%;
+  height:3px;
+  background:linear-gradient(
+    90deg,
+    var(--red) 0 33%,
+    var(--yellow) 33% 66%,
+    var(--blue) 66% 100%
+  );
+  opacity:.75;
+  margin-bottom:20px;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:15px;
+}
+
+.add-btn,
+.home-btn{
+  border:1px solid #3d3d45;
+  background:#17171c;
+  color:#f3f3ef;
+  padding:11px 16px;
+  border-radius:9px;
+  font-size:11px;
+  font-weight:bold;
+  transition:.2s;
+}
+
+.add-btn:hover,
+.home-btn:hover{
+  background:#eeeeea;
+  color:#080809;
+}
+
+/* ================================
+   FILTRES
+================================ */
+
+.filters{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  scrollbar-width:none;
+  margin-bottom:18px;
+}
+
+.filters::-webkit-scrollbar{
+  display:none;
+}
+
+.filter{
+  flex:none;
+  background:#111116;
+  color:#888891;
+  border:1px solid #292930;
+  border-radius:9px;
+  padding:9px 14px;
+  font-size:11px;
+}
+
+.filter.active,
+.filter:hover{
+  color:white;
+  background:#1a1a20;
+  border-color:#5b5b63;
+}
+
+/* ================================
+   CAROUSEL
+================================ */
+
+.carousel{
+  width:100%;
+  padding:15px 0 35px;
+}
+
+.carousel-window{
+  width:100%;
+  overflow:hidden;
+  cursor:grab;
+  touch-action:pan-y;
+}
+
+.carousel-window.dragging{
+  cursor:grabbing;
+}
+
+.cards-track{
+  display:flex;
+  align-items:flex-start;
+  gap:25px;
+  width:max-content;
+  will-change:transform;
+  user-select:none;
+}
+
+/* ================================
+   CARTE
+================================ */
+
+.carousel-card{
+  width:300px;
+  flex:0 0 300px;
+}
+
+.card-wrap{
+  width:100%;
+  height:500px;
+  perspective:1200px;
+}
+
+.card{
+  width:100%;
+  height:100%;
+  position:relative;
+  transform-style:preserve-3d;
+  transition:transform .7s cubic-bezier(.2,.7,.2,1);
+}
+
+.card.flipped{
+  transform:rotateY(180deg);
+}
+
+.card-face{
+  position:absolute;
+  inset:0;
+  border-radius:18px;
+  overflow:hidden;
+  border:2px solid #202027;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+}
+
+.card-front{
+  background:#111115;
+  cursor:pointer;
+}
+
+.card-front:before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:7px;
+  background:var(--team-color);
+  z-index:5;
+}
+
+.card-front:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.075;
+  background:repeating-linear-gradient(
+    135deg,
+    transparent 0,
+    transparent 12px,
+    var(--team-color) 13px,
+    transparent 14px
+  );
+}
+
+.card-image{
+  height:315px;
+  background:#19191e;
+  position:relative;
+  overflow:hidden;
+}
+
+.card-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  pointer-events:none;
+}
+
+.image-placeholder{
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:20px;
+  color:#55555e;
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+
+.card-info{
+  position:relative;
+  z-index:3;
+  padding:20px;
+}
+
+.card-team{
+  color:var(--team-color);
+  font-size:10px;
+  font-weight:bold;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+
+.card-name{
+  font-size:28px;
+  line-height:1;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:-1.3px;
+}
+
+.card-sub{
+  color:#777780;
+  font-size:12px;
+  margin-top:9px;
+}
+
+.comic-stripe{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  height:5px;
+  display:flex;
+}
+
+.comic-stripe span{
+  flex:1;
+}
+
+.comic-stripe span:nth-child(1){
+  background:var(--red);
+}
+
+.comic-stripe span:nth-child(2){
+  background:var(--yellow);
+}
+
+.comic-stripe span:nth-child(3){
+  background:var(--blue);
+}
+
+/* ================================
+   VERSO
+================================ */
+
+.card-back{
+  transform:rotateY(180deg);
+  background:linear-gradient(145deg,#16161b,#0d0d10);
+  padding:21px;
+  display:flex;
+  flex-direction:column;
+  cursor:pointer;
+}
+
+.back-top{
+  padding-bottom:15px;
+  border-bottom:1px solid #2b2b32;
+}
+
+.back-name{
+  font-size:22px;
+  font-weight:900;
+  text-transform:uppercase;
+}
+
+.back-team{
+  margin-top:5px;
+  color:var(--team-color);
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+}
+
+.section{
+  margin-top:16px;
+}
+
+.section-title{
+  color:var(--yellow);
+  font-size:9px;
+  font-weight:bold;
+  letter-spacing:2px;
+  margin-bottom:8px;
+}
+
+.section-text{
+  color:#a2a2a9;
+  font-size:11px;
+  line-height:1.55;
+}
+
+.abilities{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+
+.ability{
+  color:#d7d7dc;
+  background:#1b1b21;
+  border:1px solid #303038;
+  border-radius:6px;
+  padding:6px 8px;
+  font-size:9px;
+}
+
+.card-actions{
+  display:flex;
+  gap:7px;
+  margin-top:auto;
+}
+
+.comics-btn,
+.edit-card-btn{
+  flex:1;
+  border:1px solid #46464e;
+  background:#111116;
+  color:#f1f1ef;
+  padding:12px 5px;
+  border-radius:9px;
+  font-size:9px;
+  font-weight:bold;
+  position:relative;
+  z-index:10;
+}
+
+.comics-btn:hover,
+.edit-card-btn:hover{
+  background:#eeeeea;
+  color:#080809;
+}
+
+.delete-card-btn{
+  position:absolute;
+  right:16px;
+  bottom:18px;
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  border:1px solid #33333a;
+  background:#17171c;
+  color:#777;
+  z-index:20;
+}
+
+/* ================================
+   MODALES
+================================ */
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  background:rgba(0,0,0,.84);
+  backdrop-filter:blur(12px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.modal-box{
+  width:min(900px,100%);
+  max-height:90vh;
+  overflow:auto;
+  background:#111115;
+  border:1px solid #35353d;
+  border-radius:20px;
+  padding:25px;
+  box-shadow:0 30px 100px rgba(0,0,0,.7);
+}
+
+.modal-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:22px;
+}
+
+.modal-header h2{
+  font-size:25px;
+  text-transform:uppercase;
+}
+
+.close{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  border:1px solid #36363e;
+  background:#18181d;
+  color:#aaa;
+  font-size:18px;
+}
+
+/* ================================
+   FORM
+================================ */
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.form-full{
+  grid-column:1/-1;
+}
+
+.form-group{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.form-group label{
+  color:#9999a2;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  font-weight:bold;
+}
+
+.form-group input,
+.form-group textarea{
+  width:100%;
+  background:#18181d;
+  border:1px solid #303038;
+  border-radius:8px;
+  color:white;
+  padding:12px;
+  outline:none;
+  font-size:12px;
+}
+
+.form-group textarea{
+  resize:vertical;
+  min-height:90px;
+}
+
+.form-help{
+  color:#66666e;
+  font-size:9px;
+  line-height:1.4;
+}
+
+/* ================================
+   IMAGES
+================================ */
+
+.image-tools{
+  background:#15151a;
+  border:1px solid #292930;
+  border-radius:12px;
+  padding:12px;
+}
+
+.image-preview{
+  width:100%;
+  height:170px;
+  border-radius:9px;
+  overflow:hidden;
+  background:#0c0c0f;
+  border:1px solid #292930;
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.image-preview img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.image-preview span{
+  color:#55555e;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.image-row{
+  display:flex;
+  gap:7px;
+}
+
+.image-row input{
+  flex:1;
+}
+
+.file-btn{
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex:none;
+  min-width:125px;
+  padding:0 13px;
+  border:1px solid #404049;
+  border-radius:8px;
+  background:#1b1b20;
+  color:#ddd;
+  font-size:10px;
+  font-weight:bold;
+}
+
+.file-btn input{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  cursor:pointer;
+  width:100%;
+  height:100%;
+}
+
+.paste-zone{
+  margin-top:8px;
+  padding:9px 10px;
+  border:1px dashed #36363e;
+  border-radius:8px;
+  color:#66666e;
+  font-size:9px;
+  text-align:center;
+  outline:none;
+}
+
+.paste-zone:focus{
+  border-color:#66666e;
+  color:#aaa;
+}
+
+/* ================================
+   COULEUR
+================================ */
+
+.color-row{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.team-color-picker{
+  width:58px!important;
+  height:43px;
+  padding:4px!important;
+  cursor:pointer;
+}
+
+.color-preview{
+  width:43px;
+  height:43px;
+  border-radius:8px;
+  border:1px solid #3a3a42;
+}
+
+/* ================================
+   COMICS FORM
+================================ */
+
+.comic-input{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:8px;
+  background:#15151a;
+  border:1px solid #292930;
+  border-radius:11px;
+  padding:9px;
+  margin-bottom:9px;
+}
+
+.remove-comic{
+  border-radius:7px;
+  border:1px solid #33333a;
+  background:#17171c;
+  color:#777;
+  padding:8px;
+}
+
+.add-comic{
+  width:100%;
+  border:1px dashed #404049;
+  background:transparent;
+  color:#888891;
+  padding:9px;
+  border-radius:8px;
+  font-size:10px;
+}
+
+.form-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+  margin-top:22px;
+}
+
+.cancel-btn{
+  background:#17171c;
+  color:#aaa;
+  border:1px solid #33333b;
+  border-radius:8px;
+  padding:11px 17px;
+}
+
+.save-btn{
+  background:#eeeeea;
+  color:#080809;
+  border:0;
+  border-radius:8px;
+  padding:11px 20px;
+  font-weight:bold;
+}
+
+/* ================================
+   COMICS
+================================ */
+
+.comics-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:18px;
+}
+
+.comic{
+  background:#17171c;
+  border:1px solid #2d2d34;
+  border-radius:13px;
+  overflow:hidden;
+}
+
+.comic-img{
+  width:100%;
+  aspect-ratio:2/3;
+  background:#0d0d10;
+}
+
+.comic-img img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.comic-info{
+  padding:12px;
+}
+
+.comic-title{
+  font-size:13px;
+  font-weight:bold;
+}
+
+.comic-status{
+  display:flex;
+  justify-content:space-between;
+  margin-top:10px;
+}
+
+.read-btn{
+  border:0;
+  background:transparent;
+  color:#777780;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  font-size:10px;
+}
+
+.read-btn.read{
+  color:var(--yellow);
+}
+
+.eye{
+  font-size:16px;
+}
+
+/* ================================
+   EMPTY
+================================ */
+
+.empty{
+  width:300px;
+  padding:60px 20px;
+  text-align:center;
+  border:1px dashed #303038;
+  border-radius:16px;
+  color:#66666f;
+}
+
+/* ================================
+   MOBILE
+================================ */
+
+@media(max-width:700px){
+
+  .screen{
+    padding:20px 14px 40px;
+  }
+
+  .universe-grid{
+    grid-template-columns:1fr;
+  }
+
+  .universe{
+    min-height:220px;
+  }
+
+  .universe-inner{
+    min-height:220px;
+  }
+
+  .universe h2{
+    font-size:45px;
+  }
+
+  .cards-track{
+    gap:18px;
+  }
+
+  .carousel-card{
+    width:calc(100vw - 48px);
+    max-width:320px;
+    flex-basis:calc(100vw - 48px);
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .form-full{
+    grid-column:auto;
+  }
+
+  .image-row{
+    flex-direction:column;
+  }
+
+  .file-btn{
+    height:42px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ==========================================
+     ACCUEIL
+========================================== -->
+
+<section id="homeScreen" class="screen home">
+
+  <div class="home-content">
+
+    <div class="home-title">
+
+      <h1>
+        MA<br>
+        COLLECTION
+      </h1>
+
+      <div class="line"></div>
+
+    </div>
+
+
+    <div class="universe-grid">
+
+      <button
+        class="universe marvel"
+        onclick="openUniverse('Marvel')"
+      >
+
+        <div class="universe-inner">
+
+          <h2>MARVEL</h2>
+
+          <div class="universe-bottom">
+
+            <span
+              class="universe-count"
+              id="marvelCount"
+            >
+              0 personnages
+            </span>
+
+            <div class="enter">
+              →
+            </div>
+
+          </div>
+
+        </div>
+
+      </button>
+
+
+      <button
+        class="universe dc"
+        onclick="openUniverse('DC')"
+      >
+
+        <div class="universe-inner">
+
+          <h2>DC</h2>
+
+          <div class="universe-bottom">
+
+            <span
+              class="universe-count"
+              id="dcCount"
+            >
+              0 personnages
+            </span>
+
+            <div class="enter">
+              →
+            </div>
+
+          </div>
+
+        </div>
+
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ==========================================
+     COLLECTION
+========================================== -->
+
+<section
+  id="collectionScreen"
+  class="screen hidden"
+>
+
+  <header class="topbar">
+
+    <div class="logo">
+
+      <div class="logo-mark"></div>
+
+      COLLECTION
+
+    </div>
+
+
+    <button
+      class="home-btn"
+      onclick="goHome()"
+    >
+      ← Accueil
+    </button>
+
+  </header>
+
+
+  <div class="collection-title">
+
+    <h1 id="collectionTitle">
+      MARVEL
+    </h1>
+
+  </div>
+
+
+  <div class="accent-line"></div>
+
+
+  <div class="actions">
+
+    <button
+      class="add-btn"
+      onclick="openAddModal()"
+    >
+      ＋ AJOUTER UNE CARTE
+    </button>
+
+  </div>
+
+
+  <div
+    id="filters"
+    class="filters"
+  ></div>
+
+
+  <div class="carousel">
+
+    <div
+      id="carouselWindow"
+      class="carousel-window"
+    >
+
+      <div
+        id="cardsTrack"
+        class="cards-track"
+      ></div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ==========================================
+     MODAL CARTE
+========================================== -->
+
+<div
+  id="cardModal"
+  class="modal hidden"
+>
+
+  <div class="modal-box">
+
+    <div class="modal-header">
+
+      <h2 id="formTitle">
+        Nouvelle carte
+      </h2>
+
+      <button
+        class="close"
+        onclick="closeCardModal()"
+      >
+        ×
+      </button>
+
+    </div>
+
+
+    <form
+      id="cardForm"
+      onsubmit="saveCard(event)"
+    >
+
+      <div class="form-grid">
+
+
+        <div class="form-group">
+
+          <label>
+            Nom du personnage
+          </label>
+
+          <input
+            id="fName"
+            required
+            placeholder="Ex : Spider-Man"
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Alias
+          </label>
+
+          <input
+            id="fAlias"
+            placeholder="Ex : Peter Parker"
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Équipe
+          </label>
+
+          <input
+            id="fTeam"
+            placeholder="Ex : Avengers"
+          >
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label>
+            Couleur de l'équipe
+          </label>
+
+          <div class="color-row">
+
+            <input
+              id="fTeamColor"
+              class="team-color-picker"
+              type="color"
+              value="#e52d35"
+              oninput="updateColorPreview()"
+            >
+
+            <div
+              id="colorPreview"
+              class="color-preview"
+            ></div>
+
+          </div>
+
+        </div>
+
+
+        <!-- IMAGE PERSONNAGE -->
+
+        <div class="form-group form-full">
+
+          <label>
+            Image du personnage
+          </label>
+
+          <div
+            id="characterImageTool"
+          ></div>
+
+        </div>
+
+
+        <!-- DESCRIPTION -->
+
+        <div class="form-group form-full">
+
+          <label>
+            Description
+          </label>
+
+          <textarea
+            id="fDescription"
+            placeholder="Ton texte..."
+          ></textarea>
+
+        </div>
+
+
+        <!-- CAPACITÉS -->
+
+        <div class="form-group form-full">
+
+          <label>
+            Capacités
+          </label>
+
+          <input
+            id="fAbilities"
+            placeholder="Force, vitesse, télépathie..."
+          >
+
+          <div class="form-help">
+            Sépare les capacités avec des virgules.
+          </div>
+
+        </div>
+
+
+        <!-- COMICS -->
+
+        <div class="form-group form-full">
+
+          <label>
+            Comics recommandés
+          </label>
+
+          <div id="comicInputs"></div>
+
+          <button
+            type="button"
+            class="add-comic"
+            onclick="addComicInput()"
+          >
+            ＋ Ajouter un comic
+          </button>
+
+        </div>
+
+
+      </div>
+
+
+      <div class="form-actions">
+
+        <button
+          type="button"
+          class="cancel-btn"
+          onclick="closeCardModal()"
+        >
+          Annuler
+        </button>
+
+        <button
+          type="submit"
+          class="save-btn"
+        >
+          Enregistrer la carte
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+<!-- ==========================================
+     MODAL COMICS
+========================================== -->
+
+<div
+  id="comicModal"
+  class="modal hidden"
+  onclick="closeModalOutside(event)"
+>
+
+  <div class="modal-box">
+
+    <div class="modal-header">
+
+      <h2 id="modalTitle">
+        Comics
+      </h2>
+
+      <button
+        class="close"
+        onclick="closeComicModal()"
+      >
+        ×
+      </button>
+
+    </div>
+
+    <div
+      id="comicsList"
+      class="comics-list"
+    ></div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+/* ==========================================================
+   STOCKAGE
+   V12 utilise localStorage + IndexedDB pour les images.
+
+   Les données classiques restent dans localStorage.
+   Les images locales peuvent être conservées dans IndexedDB,
+   ce qui évite de perdre la carte à cause de la taille.
+========================================================== */
+
+const STORAGE_KEY="marvel_dc_collection_v12";
+
+let characters=[];
+
+let currentUniverse="Marvel";
+let currentTeam="Tous";
+
+let carouselIndex=0;
+let carouselItems=[];
+
+let editingId=null;
+
+let characterImage="";
+
+let comicImageValues={};
+
+let comicInputCounter=0;
+
+
+/* ==========================================================
+   EXEMPLES PAR DÉFAUT
+========================================================== */
+
+const defaultCharacters=[
+
+{
+ id:"spiderman",
+ universe:"Marvel",
+ team:"Avengers",
+ teamColor:"#e52d35",
+ name:"Spider-Man",
+ alias:"Peter Parker",
+ image:"",
+ description:
+ "Peter Parker est un jeune héros doté de capacités extraordinaires après avoir été mordu par une araignée radioactive.",
+ abilities:[
+  "Force surhumaine",
+  "Agilité",
+  "Sens d'araignée",
+  "Adhérence",
+  "Toiles"
+ ],
+ comics:[]
+},
+
+{
+ id:"wolverine",
+ universe:"Marvel",
+ team:"X-Men",
+ teamColor:"#237bd3",
+ name:"Wolverine",
+ alias:"Logan",
+ image:"",
+ description:
+ "Mutant au facteur guérisseur exceptionnel, Logan possède des griffes en adamantium et une longue expérience du combat.",
+ abilities:[
+  "Facteur guérisseur",
+  "Griffes en adamantium",
+  "Sens aiguisés",
+  "Force",
+  "Combattant"
+ ],
+ comics:[]
+},
+
+{
+ id:"ironman",
+ universe:"Marvel",
+ team:"Avengers",
+ teamColor:"#e52d35",
+ name:"Iron Man",
+ alias:"Tony Stark",
+ image:"",
+ description:
+ "Tony Stark est un inventeur milliardaire qui utilise une armure technologique de pointe pour devenir Iron Man.",
+ abilities:[
+  "Génie",
+  "Armure",
+  "Technologie",
+  "Vol",
+  "Armes énergétiques"
+ ],
+ comics:[]
+},
+
+{
+ id:"batman",
+ universe:"DC",
+ team:"Justice League",
+ teamColor:"#f0c52e",
+ name:"Batman",
+ alias:"Bruce Wayne",
+ image:"",
+ description:
+ "Bruce Wayne protège Gotham City sous l'identité de Batman grâce à son intelligence, son entraînement et sa technologie.",
+ abilities:[
+  "Intelligence",
+  "Arts martiaux",
+  "Détective",
+  "Technologie",
+  "Stratégie"
+ ],
+ comics:[]
+},
+
+{
+ id:"superman",
+ universe:"DC",
+ team:"Justice League",
+ teamColor:"#237bd3",
+ name:"Superman",
+ alias:"Clark Kent",
+ image:"",
+ description:
+ "Dernier fils de Krypton, Superman protège la Terre grâce aux pouvoirs qu'il développe sous le soleil jaune.",
+ abilities:[
+  "Force",
+  "Vol",
+  "Super-vitesse",
+  "Vision thermique",
+  "Invulnérabilité"
+ ],
+ comics:[]
+}
+
+];
+
+
+/* ==========================================================
+   INDEXED DB
+========================================================== */
+
+let db=null;
+
+function openDatabase(){
+
+ return new Promise((resolve,reject)=>{
+
+  if(!window.indexedDB){
+
+   resolve(null);
+   return;
+
+  }
+
+  const request=
+  indexedDB.open(
+   "ComicCollectionV12",
+   1
+  );
+
+
+  request.onupgradeneeded=event=>{
+
+   const database=
+   event.target.result;
+
+   if(
+    !database.objectStoreNames.contains(
+     "images"
+    )
+   ){
+
+    database.createObjectStore(
+     "images"
+    );
+
+   }
+
+  };
+
+
+  request.onsuccess=event=>{
+
+   db=event.target.result;
+
+   resolve(db);
+
+  };
+
+
+  request.onerror=()=>{
+   resolve(null);
+  };
+
+ });
+
+}
+
+
+function saveImageToDB(
+ key,
+ value
+){
+
+ return new Promise(resolve=>{
+
+  if(!db || !value){
+
+   resolve();
+   return;
+
+  }
+
+  try{
+
+   const tx=
+   db.transaction(
+    "images",
+    "readwrite"
+   );
+
+   tx.objectStore(
+    "images"
+   ).put(
+    value,
+    key
+   );
+
+   tx.oncomplete=()=>{
+    resolve();
+   };
+
+   tx.onerror=()=>{
+    resolve();
+   };
+
+  }catch{
+
+   resolve();
+
+  }
+
+ });
+
+}
+
+
+function getImageFromDB(key){
+
+ return new Promise(resolve=>{
+
+  if(!db){
+
+   resolve("");
+   return;
+
+  }
+
+  try{
+
+   const tx=
+   db.transaction(
+    "images",
+    "readonly"
+   );
+
+   const request=
+   tx.objectStore(
+    "images"
+   ).get(key);
+
+   request.onsuccess=()=>{
+    resolve(request.result||"");
+   };
+
+   request.onerror=()=>{
+    resolve("");
+   };
+
+  }catch{
+
+   resolve("");
+
+  }
+
+ });
+
+}
+
+
+/* ==========================================================
+   CHARGEMENT
+========================================================== */
+
+async function loadCollection(){
+
+ await openDatabase();
+
+
+ let saved=null;
+
+ try{
+
+  saved=
+  JSON.parse(
+   localStorage.getItem(
+    STORAGE_KEY
+   )
+  );
+
+ }catch{
+
+  saved=null;
+
+ }
+
+
+ if(
+  Array.isArray(saved)
+ ){
+
+  characters=saved;
+
+ }else{
+
+  /*
+    Première ouverture.
+    On crée une copie des exemples.
+  */
+
+  characters=
+  JSON.parse(
+   JSON.stringify(
+    defaultCharacters
+   )
+  );
+
+  await persistCollection();
+
+ }
+
+
+ /*
+   Sécurité : normalisation.
+ */
+
+ characters=
+ characters.map(c=>({
+
+  ...c,
+
+  teamColor:
+   c.teamColor||
+   (
+    c.universe==="Marvel"
+    ?"#e52d35"
+    :"#237bd3"
+   ),
+
+  abilities:
+   Array.isArray(c.abilities)
+   ?c.abilities
+   :[],
+
+  comics:
+   Array.isArray(c.comics)
+   ?c.comics
+   :[]
+
+ }));
+
+
+ updateHomeCounts();
+
+}
+
+
+async function persistCollection(){
+
+ try{
+
+  localStorage.setItem(
+   STORAGE_KEY,
+   JSON.stringify(
+    characters
+   )
+  );
+
+  /*
+    Vérification immédiate.
+  */
+
+  const check=
+  localStorage.getItem(
+   STORAGE_KEY
+  );
+
+  if(!check){
+   throw new Error(
+    "Sauvegarde impossible"
+   );
+  }
+
+ }catch(error){
+
+  /*
+    Si localStorage est saturé,
+    on tente de stocker une version
+    sans les images base64.
+  */
+
+  try{
+
+   const backup=
+   characters.map(c=>({
+
+    ...c,
+
+    image:
+     c.image?.startsWith("data:")
+     ?""
+     :c.image,
+
+    comics:
+     (c.comics||[]).map(comic=>({
+
+      ...comic,
+
+      image:
+       comic.image?.startsWith("data:")
+       ?""
+       :comic.image
+
+     }))
+
+   }));
+
+   localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(backup)
+   );
+
+  }catch{
+
+   alert(
+    "La carte n'a pas pu être enregistrée. Le stockage du navigateur est peut-être plein."
+   );
+
+  }
+
+ }
+
+}
+
+
+/* ==========================================================
+   INITIALISATION
+========================================================== */
+
+document.addEventListener(
+ "DOMContentLoaded",
+ async()=>{
+
+  await loadCollection();
+
+  setupSwipe();
+
+ }
+);
+
+
+/* ==========================================================
+   ACCUEIL
+========================================================== */
+
+function updateHomeCounts(){
+
+ const marvel=
+ characters.filter(
+  c=>c.universe==="Marvel"
+ ).length;
+
+ const dc=
+ characters.filter(
+  c=>c.universe==="DC"
+ ).length;
+
+
+ document.getElementById(
+  "marvelCount"
+ ).textContent=
+ marvel+
+ (
+  marvel===1
+  ?" personnage"
+  :" personnages"
+ );
+
+
+ document.getElementById(
+  "dcCount"
+ ).textContent=
+ dc+
+ (
+  dc===1
+  ?" personnage"
+  :" personnages"
+ );
+
+}
+
+
+function openUniverse(universe){
+
+ currentUniverse=universe;
+
+ currentTeam="Tous";
+
+ document
+  .getElementById(
+   "homeScreen"
+  )
+  .classList.add("hidden");
+
+
+ document
+  .getElementById(
+   "collectionScreen"
+  )
+  .classList.remove("hidden");
+
+
+ document.getElementById(
+  "collectionTitle"
+ ).textContent=
+ universe.toUpperCase();
+
+
+ renderFilters();
+
+ renderCarousel();
+
+}
+
+
+function goHome(){
+
+ document
+  .getElementById(
+   "collectionScreen"
+  )
+  .classList.add("hidden");
+
+
+ document
+  .getElementById(
+   "homeScreen"
+  )
+  .classList.remove("hidden");
+
+
+ updateHomeCounts();
+
+}
+
+
+/* ==========================================================
+   FILTRES
+========================================================== */
+
+function renderFilters(){
+
+ const container=
+ document.getElementById(
+  "filters"
+ );
+
+ container.innerHTML="";
+
+
+ const list=
+ characters.filter(
+  c=>c.universe===currentUniverse
+ );
+
+
+ const teams=[
+  ...new Set(
+   list.map(c=>c.team)
+  )
+ ].filter(Boolean);
+
+
+ const all=
+ document.createElement(
+  "button"
+ );
+
+ all.className=
+ "filter "+
+ (
+  currentTeam==="Tous"
+  ?"active"
+  :""
+ );
+
+ all.textContent="Tous";
+
+
+ all.onclick=()=>{
+
+  currentTeam="Tous";
+
+  renderFilters();
+
+  renderCarousel();
+
+ };
+
+
+ container.appendChild(all);
+
+
+ teams.forEach(team=>{
+
+  const button=
+  document.createElement(
+   "button"
+  );
+
+  button.className=
+  "filter "+
+  (
+   currentTeam===team
+   ?"active"
+   :""
+  );
+
+  button.textContent=team;
+
+
+  button.onclick=()=>{
+
+   currentTeam=team;
+
+   renderFilters();
+
+   renderCarousel();
+
+  };
+
+
+  container.appendChild(
+   button
+  );
+
+ });
+
+}
+
+
+/* ==========================================================
+   CAROUSEL
+========================================================== */
+
+function renderCarousel(){
+
+ const track=
+ document.getElementById(
+  "cardsTrack"
+ );
+
+ let list=
+ characters.filter(
+  c=>c.universe===currentUniverse
+ );
+
+
+ if(currentTeam!=="Tous"){
+
+  list=
+  list.filter(
+   c=>c.team===currentTeam
+  );
+
+ }
+
+
+ carouselItems=list;
+
+ track.innerHTML="";
+
+
+ if(!list.length){
+
+  track.innerHTML=`
+   <div class="empty">
+    Aucune carte pour le moment.<br><br>
+    Utilise « Ajouter une carte ».
+   </div>
+  `;
+
+  return;
+
+ }
+
+
+ /*
+   Plusieurs copies permettent
+   le défilement infini.
+ */
+
+ for(
+  let copy=0;
+  copy<7;
+  copy++
+ ){
+
+  list.forEach(character=>{
+
+   const wrapper=
+   document.createElement(
+    "div"
+   );
+
+   wrapper.className=
+   "carousel-card";
+
+   wrapper.innerHTML=
+   createCard(character);
+
+   track.appendChild(
+    wrapper
+   );
+
+  });
+
+ }
+
+
+ carouselIndex=
+ list.length*3;
+
+
+ requestAnimationFrame(()=>{
+
+  requestAnimationFrame(()=>{
+
+   centerCurrentCard(false);
+
+  });
+
+ });
+
+}
+
+
+function getCurrentTranslateX(element){
+
+ const style=
+ getComputedStyle(element);
+
+
+ if(
+  !style.transform ||
+  style.transform==="none"
+ ){
+  return 0;
+ }
+
+
+ return new DOMMatrixReadOnly(
+  style.transform
+ ).m41;
+
+}
+
+
+function centerCurrentCard(
+ animate=false
+){
+
+ const track=
+ document.getElementById(
+  "cardsTrack"
+ );
+
+ const windowEl=
+ document.getElementById(
+  "carouselWindow"
+ );
+
+
+ if(
+  !track ||
+  !windowEl ||
+  !track.children.length
+ ){
+  return;
+ }
+
+
+ const card=
+ track.children[
+  carouselIndex
+ ];
+
+
+ if(!card)return;
+
+
+ const windowRect=
+ windowEl.getBoundingClientRect();
+
+
+ const cardRect=
+ card.getBoundingClientRect();
+
+
+ const cardCenter=
+ cardRect.left+
+ cardRect.width/2;
+
+
+ const windowCenter=
+ windowRect.left+
+ windowRect.width/2;
+
+
+ const correction=
+ windowCenter-cardCenter;
+
+
+ const current=
+ getCurrentTranslateX(
+  track
+ );
+
+
+ track.style.transition=
+ animate
+ ?"transform .45s cubic-bezier(.2,.7,.2,1)"
+ :"none";
+
+
+ track.style.transform=
+ `translate3d(
+  ${current+correction}px,
+  0,
+  0
+ )`;
+
+}
+
+
+function moveCarousel(direction){
+
+ if(!carouselItems.length){
+  return;
+ }
+
+
+ carouselIndex+=direction;
+
+
+ centerCurrentCard(true);
+
+
+ setTimeout(()=>{
+
+  const total=
+  carouselItems.length;
+
+
+  if(
+   carouselIndex<total*2
+  ){
+
+   carouselIndex+=total*3;
+
+   centerCurrentCard(false);
+
+  }
+
+
+  if(
+   carouselIndex>=total*5
+  ){
+
+   carouselIndex-=total*3;
+
+   centerCurrentCard(false);
+
+  }
+
+ },470);
+
+}
+
+
+/* ==========================================================
+   SWIPE
+========================================================== */
+
+let isDragging=false;
+let dragStartX=0;
+let dragCurrentX=0;
+let dragStartTransform=0;
+
+
+function setupSwipe(){
+
+ const win=
+ document.getElementById(
+  "carouselWindow"
+ );
+
+
+ win.addEventListener(
+  "pointerdown",
+  startDrag
+ );
+
+
+ win.addEventListener(
+  "pointermove",
+  dragMove
+ );
+
+
+ win.addEventListener(
+  "pointerup",
+  endDrag
+ );
+
+
+ win.addEventListener(
+  "pointercancel",
+  endDrag
+ );
+
+}
+
+
+function startDrag(event){
+
+ isDragging=true;
+
+ dragStartX=
+ event.clientX;
+
+ dragCurrentX=
+ event.clientX;
+
+
+ const track=
+ document.getElementById(
+  "cardsTrack"
+ );
+
+
+ dragStartTransform=
+ getCurrentTranslateX(
+  track
+ );
+
+
+ document
+  .getElementById(
+   "carouselWindow"
+  )
+  .classList.add(
+   "dragging"
+  );
+
+}
+
+
+function dragMove(event){
+
+ if(!isDragging){
+  return;
+ }
+
+
+ dragCurrentX=
+ event.clientX;
+
+
+ const delta=
+ dragCurrentX-
+ dragStartX;
+
+
+ const track=
+ document.getElementById(
+  "cardsTrack"
+ );
+
+
+ track.style.transition=
+ "none";
+
+
+ track.style.transform=
+ `translate3d(
+  ${dragStartTransform+delta}px,
+  0,
+  0
+ )`;
+
+}
+
+
+function endDrag(){
+
+ if(!isDragging){
+  return;
+ }
+
+
+ isDragging=false;
+
+
+ document
+  .getElementById(
+   "carouselWindow"
+  )
+  .classList.remove(
+   "dragging"
+  );
+
+
+ const delta=
+ dragCurrentX-
+ dragStartX;
+
+
+ if(
+  Math.abs(delta)>45
+ ){
+
+  moveCarousel(
+   delta<0
+   ?1
+   :-1
+  );
+
+ }else{
+
+  centerCurrentCard(true);
+
+ }
+
+}
+
+
+/* ==========================================================
+   CARTE
+========================================================== */
+
+function createCard(character){
+
+ const color=
+ character.teamColor||
+ (
+  character.universe==="Marvel"
+  ?"#e52d35"
+  :"#237bd3"
+ );
+
+
+ const abilities=
+ (character.abilities||[])
+ .map(
+  ability=>
+  `<span class="ability">
+   ${escapeHTML(ability)}
+  </span>`
+ )
+ .join("");
+
+
+ let imageHTML;
+
+
+ if(character.image){
+
+  imageHTML=
+  `<img
+   src="${escapeAttr(character.image)}"
+   alt="${escapeAttr(character.name)}"
+  >`;
+
+ }else{
+
+  imageHTML=
+  `<div class="image-placeholder">
+   AJOUTE TON IMAGE
+  </div>`;
+
+ }
+
+
+ return `
+
+ <div
+  class="card-wrap"
+  style="--team-color:${escapeAttr(color)}"
+ >
+
+  <div
+   class="card"
+   onclick="handleCardClick(event,this)"
+  >
+
+   <!-- RECTO -->
+
+   <div class="card-face card-front">
+
+    <div class="card-image">
+     ${imageHTML}
+    </div>
+
+    <div class="card-info">
+
+     <div class="card-team">
+      ${escapeHTML(character.team||"")}
+     </div>
+
+     <div class="card-name">
+      ${escapeHTML(character.name)}
+     </div>
+
+     <div class="card-sub">
+      ${escapeHTML(character.alias||"")}
+     </div>
+
+    </div>
+
+    <div class="comic-stripe">
+     <span></span>
+     <span></span>
+     <span></span>
+    </div>
+
+   </div>
+
+
+   <!-- VERSO -->
+
+   <div class="card-face card-back">
+
+    <div class="back-top">
+
+     <div class="back-name">
+      ${escapeHTML(character.name)}
+     </div>
+
+     <div class="back-team">
+      ${escapeHTML(character.team||"")}
+     </div>
+
+    </div>
+
+
+    <div class="section">
+
+     <div class="section-title">
+      DESCRIPTION
+     </div>
+
+     <div class="section-text">
+      ${escapeHTML(character.description||"")}
+     </div>
+
+    </div>
+
+
+    <div class="section">
+
+     <div class="section-title">
+      CAPACITÉS
+     </div>
+
+     <div class="abilities">
+      ${abilities}
+     </div>
+
+    </div>
+
+
+    <div class="card-actions">
+
+     <button
+      class="comics-btn"
+      onclick="
+       event.stopPropagation();
+       openComics('${character.id}')
+      "
+     >
+      📖 COMICS
+     </button>
+
+
+     <button
+      class="edit-card-btn"
+      onclick="
+       event.stopPropagation();
+       editCard('${character.id}')
+      "
+     >
+      ✎ MODIFIER
+     </button>
+
+    </div>
+
+
+    <button
+     class="delete-card-btn"
+     onclick="
+      event.stopPropagation();
+      deleteCard('${character.id}')
+     "
+    >
+     ×
+    </button>
+
+   </div>
+
+  </div>
+
+ </div>
+
+ `;
+
+}
+
+
+/* ==========================================================
+   CLIC CARTE
+   V12 : un seul clic.
+========================================================== */
+
+function handleCardClick(
+ event,
+ card
+){
+
+ /*
+   Les boutons du verso ne retournent
+   pas la carte une deuxième fois.
+ */
+
+ if(
+  event.target.closest(
+   "button"
+  )
+ ){
+  return;
+ }
+
+
+ card.classList.toggle(
+  "flipped"
+ );
+
+}
+
+
+/* ==========================================================
+   MODAL AJOUT
+========================================================== */
+
+function openAddModal(){
+
+ editingId=null;
+
+ document.getElementById(
+  "formTitle"
+ ).textContent=
+ "Nouvelle carte";
+
+
+ document.getElementById(
+  "cardForm"
+ ).reset();
+
+
+ /*
+   Plus de choix Marvel/DC :
+   l'univers est automatiquement
+   celui de la page actuelle.
+ */
+
+
+ document.getElementById(
+  "fTeamColor"
+ ).value=
+ currentUniverse==="Marvel"
+ ?"#e52d35"
+ :"#237bd3";
+
+
+ updateColorPreview();
+
+
+ characterImage="";
+
+
+ createImageTool(
+  "characterImageTool",
+  "",
+  value=>{
+   characterImage=value;
+  }
+ );
+
+
+ document.getElementById(
+  "comicInputs"
+ ).innerHTML="";
+
+
+ comicImageValues={};
+
+ addComicInput();
+
+
+ document
+  .getElementById(
+   "cardModal"
+  )
+  .classList.remove(
+   "hidden"
+  );
+
+}
+
+
+/* ==========================================================
+   MODIFICATION
+========================================================== */
+
+function editCard(id){
+
+ const character=
+ characters.find(
+  c=>c.id===id
+ );
+
+
+ if(!character){
+  return;
+ }
+
+
+ editingId=id;
+
+
+ document.getElementById(
+  "formTitle"
+ ).textContent=
+ "Modifier la carte";
+
+
+ document.getElementById(
+  "fName"
+ ).value=
+ character.name||"";
+
+
+ document.getElementById(
+  "fAlias"
+ ).value=
+ character.alias||"";
+
+
+ document.getElementById(
+  "fTeam"
+ ).value=
+ character.team||"";
+
+
+ document.getElementById(
+  "fTeamColor"
+ ).value=
+ character.teamColor||
+ (
+  currentUniverse==="Marvel"
+  ?"#e52d35"
+  :"#237bd3"
+ );
+
+
+ document.getElementById(
+  "fDescription"
+ ).value=
+ character.description||"";
+
+
+ document.getElementById(
+  "fAbilities"
+ ).value=
+ (
+  character.abilities||[]
+ ).join(", ");
+
+
+ updateColorPreview();
+
+
+ characterImage=
+ character.image||"";
+
+
+ createImageTool(
+  "characterImageTool",
+  characterImage,
+  value=>{
+   characterImage=value;
+  }
+ );
+
+
+ document.getElementById(
+  "comicInputs"
+ ).innerHTML="";
+
+
+ comicImageValues={};
+
+
+ if(
+  character.comics &&
+  character.comics.length
+ ){
+
+  character.comics.forEach(
+   comic=>{
+    addComicInput(
+     comic.title||"",
+     comic.image||""
+    );
+   }
+  );
+
+ }else{
+
+  addComicInput();
+
+ }
+
+
+ document
+  .getElementById(
+   "cardModal"
+  )
+  .classList.remove(
+   "hidden"
+  );
+
+}
+
+
+/* ==========================================================
+   COULEUR
+========================================================== */
+
+function updateColorPreview(){
+
+ const color=
+ document.getElementById(
+  "fTeamColor"
+ ).value;
+
+
+ document.getElementById(
+  "colorPreview"
+ ).style.background=
+ color;
+
+}
+
+
+/* ==========================================================
+   IMAGE TOOL
+========================================================== */
+
+function createImageTool(
+ containerId,
+ initialValue="",
+ onChange=null
+){
+
+ const container=
+ document.getElementById(
+  containerId
+ );
+
+
+ container.innerHTML="";
+
+
+ let value=
+ initialValue||"";
+
+
+ const tool=
+ document.createElement(
+  "div"
+ );
+
+
+ tool.className=
+ "image-tools";
+
+
+ tool.innerHTML=`
+
+  <div class="image-preview">
+
+   <span>
+    Aucune image
+   </span>
+
+  </div>
+
+
+  <div class="image-row">
+
+   <input
+    type="text"
+    class="image-url"
+    placeholder="Colle une URL d'image ici..."
+   >
+
+
+   <label class="file-btn">
+
+    📷 Choisir une image
+
+    <input
+     type="file"
+     accept="image/*"
+     class="image-file"
+    >
+
+   </label>
+
+  </div>
+
+
+  <div
+   class="paste-zone"
+   tabindex="0"
+  >
+   📋 Clique ici puis colle directement une image
+   avec Ctrl+V / ⌘V
+  </div>
+
+ `;
+
+
+ container.appendChild(tool);
+
+
+ const preview=
+ tool.querySelector(
+  ".image-preview"
+ );
+
+
+ const urlInput=
+ tool.querySelector(
+  ".image-url"
+ );
+
+
+ const fileInput=
+ tool.querySelector(
+  ".image-file"
+ );
+
+
+ const pasteZone=
+ tool.querySelector(
+  ".paste-zone"
+ );
+
+
+ function setImage(
+  newValue
+ ){
+
+  value=newValue||"";
+
+
+  if(value){
+
+   preview.innerHTML=
+   `<img src="${escapeAttr(value)}">`;
+
+  }else{
+
+   preview.innerHTML=
+   `<span>Aucune image</span>`;
+
+  }
+
+
+  if(onChange){
+
+   onChange(value);
+
+  }
+
+ }
+
+
+ if(value){
+
+  setImage(value);
+
+ }
+
+
+ if(
+  value &&
+  !value.startsWith("data:")
+ ){
+
+  urlInput.value=value;
+
+ }
+
+
+ urlInput.addEventListener(
+  "input",
+  ()=>{
+
+   setImage(
+    urlInput.value.trim()
+   );
+
+  }
+ );
+
+
+ fileInput.addEventListener(
+  "change",
+  ()=>{
+
+   const file=
+   fileInput.files[0];
+
+
+   if(!file){
+    return;
+   }
+
+
+   readImageFile(
+    file,
+    setImage
+   );
+
+  }
+ );
+
+
+ pasteZone.addEventListener(
+  "paste",
+  event=>{
+
+   const items=
+   event.clipboardData?.items;
+
+
+   if(!items){
+    return;
+   }
+
+
+   for(
+    const item
+    of items
+   ){
+
+    if(
+     item.type.startsWith(
+      "image/"
+     )
+    ){
+
+     event.preventDefault();
+
+
+     const file=
+     item.getAsFile();
+
+
+     readImageFile(
+      file,
+      setImage
+     );
+
+
+     return;
+
+    }
+
+   }
+
+
+   const text=
+   event.clipboardData
+   ?.getData("text")
+   ?.trim();
+
+
+   if(text){
+
+    event.preventDefault();
+
+    urlInput.value=text;
+
+    setImage(text);
+
+   }
+
+  }
+ );
+
+
+ return {
+
+  getValue:()=>{
+   return value;
+  },
+
+  setValue:setImage
+
+ };
+
+}
+
+
+/* ==========================================================
+   LECTURE IMAGE
+========================================================== */
+
+function readImageFile(
+ file,
+ callback
+){
+
+ if(!file){
+  return;
+ }
+
+
+ if(
+  !file.type.startsWith(
+   "image/"
+  )
+ ){
+
+  alert(
+   "Ce fichier n'est pas une image."
+  );
+
+  return;
+
+ }
+
+
+ /*
+   Compression automatique des grosses
+   photos pour éviter que le stockage
+   soit saturé.
+ */
+
+ const reader=
+ new FileReader();
+
+
+ reader.onload=event=>{
+
+  const src=
+  event.target.result;
+
+
+  const img=
+  new Image();
+
+
+  img.onload=()=>{
+
+   const maxSize=1400;
+
+   let width=
+   img.width;
+
+   let height=
+   img.height;
+
+
+   if(
+    width>maxSize ||
+    height>maxSize
+   ){
+
+    const ratio=
+    Math.min(
+     maxSize/width,
+     maxSize/height
+    );
+
+    width=
+    Math.round(
+     width*ratio
+    );
+
+    height=
+    Math.round(
+     height*ratio
+    );
+
+   }
+
+
+   const canvas=
+   document.createElement(
+    "canvas"
+   );
+
+
+   canvas.width=width;
+   canvas.height=height;
+
+
+   const ctx=
+   canvas.getContext(
+    "2d"
+   );
+
+
+   ctx.drawImage(
+    img,
+    0,
+    0,
+    width,
+    height
+   );
+
+
+   /*
+     JPEG qualité raisonnable :
+     beaucoup plus léger que la photo
+     originale.
+   */
+
+   const compressed=
+   canvas.toDataURL(
+    "image/jpeg",
+    .84
+   );
+
+
+   callback(compressed);
+
+  };
+
+
+  img.onerror=()=>{
+
+   callback(src);
+
+  };
+
+
+  img.src=src;
+
+ };
+
+
+ reader.readAsDataURL(file);
+
+}
+
+
+/* ==========================================================
+   COMICS INPUT
+========================================================== */
+
+function addComicInput(
+ title="",
+ image=""
+){
+
+ const container=
+ document.getElementById(
+  "comicInputs"
+ );
+
+
+ const id=
+ "comic_"+(
+  ++comicInputCounter
+ );
+
+
+ const row=
+ document.createElement(
+  "div"
+ );
+
+
+ row.className=
+ "comic-input";
+
+
+ row.dataset.id=id;
+
+
+ row.innerHTML=`
+
+  <input
+   class="comic-title-input"
+   placeholder="Nom du comic"
+   value="${escapeAttr(title)}"
+  >
+
+
+  <div
+   class="comic-image-tool"
+   id="${id}_image"
+  ></div>
+
+
+  <button
+   type="button"
+   class="remove-comic"
+   onclick="
+    this.parentElement.remove()
+   "
+  >
+   × Supprimer ce comic
+  </button>
+
+ `;
+
+
+ container.appendChild(row);
+
+
+ createImageTool(
+  id+"_image",
+  image,
+  value=>{
+   comicImageValues[id]=value;
+  }
+ );
+
+
+ comicImageValues[id]=
+ image||"";
+
+}
+
+
+/* ==========================================================
+   SAUVEGARDE CARTE
+========================================================== */
+
+async function saveCard(event){
+
+ event.preventDefault();
+
+
+ const name=
+ document.getElementById(
+  "fName"
+ ).value.trim();
+
+
+ if(!name){
+
+  alert(
+   "Ajoute un nom au personnage."
+  );
+
+  return;
+
+ }
+
+
+ const comics=[];
+
+
+ document
+  .querySelectorAll(
+   "#comicInputs .comic-input"
+  )
+  .forEach(row=>{
+
+   const title=
+   row.querySelector(
+    ".comic-title-input"
+   )?.value.trim()||"";
+
+
+   const id=
+   row.dataset.id;
+
+
+   const image=
+   comicImageValues[id]||"";
+
+
+   if(title||image){
+
+    comics.push({
+
+     title:
+      title||"Comic",
+
+     image:image
+
+    });
+
+   }
+
+  });
+
+
+ const data={
+
+  name:name,
+
+  alias:
+   document.getElementById(
+    "fAlias"
+   ).value.trim(),
+
+  team:
+   document.getElementById(
+    "fTeam"
+   ).value.trim(),
+
+  /*
+    IMPORTANT :
+    l'univers est automatiquement
+    celui de la page.
+  */
+
+  universe:
+   editingId
+   ?(
+     characters.find(
+      c=>c.id===editingId
+     )?.universe||
+     currentUniverse
+    )
+   :currentUniverse,
+
+  teamColor:
+   document.getElementById(
+    "fTeamColor"
+   ).value,
+
+  image:
+   characterImage||"",
+
+  description:
+   document.getElementById(
+    "fDescription"
+   ).value.trim(),
+
+  abilities:
+   document.getElementById(
+    "fAbilities"
+   )
+   .value
+   .split(",")
+   .map(
+    x=>x.trim()
+   )
+   .filter(Boolean),
+
+  comics:comics
+
+ };
+
+
+ if(editingId){
+
+  const index=
+  characters.findIndex(
+   c=>c.id===editingId
+  );
+
+
+  if(index!==-1){
+
+   characters[index]={
+    ...characters[index],
+    ...data
+   };
+
+  }
+
+ }else{
+
+  data.id=
+   "card_"+
+   Date.now()+
+   "_"+
+   Math.random()
+   .toString(36)
+   .slice(2,9);
+
+
+  characters.push(data);
+
+ }
+
+
+ /*
+   V12 :
+   sauvegarde avant de fermer
+   la fenêtre.
+ */
+
+ await persistCollection();
+
+
+ /*
+   Vérification supplémentaire.
+ */
+
+ try{
+
+  const saved=
+  JSON.parse(
+   localStorage.getItem(
+    STORAGE_KEY
+   )
+  );
+
+
+  if(
+   !Array.isArray(saved)
+  ){
+
+   throw new Error(
+    "Vérification échouée"
+   );
+
+  }
+
+ }catch{
+
+  alert(
+   "La carte a été créée, mais le navigateur n'a pas pu confirmer la sauvegarde."
+  );
+
+ }
+
+
+ closeCardModal();
+
+
+ updateHomeCounts();
+
+ renderFilters();
+
+ renderCarousel();
+
+}
+
+
+/* ==========================================================
+   FERMETURE MODAL
+========================================================== */
+
+function closeCardModal(){
+
+ document
+  .getElementById(
+   "cardModal"
+  )
+  .classList.add(
+   "hidden"
+  );
+
+}
+
+
+/* ==========================================================
+   SUPPRESSION
+========================================================== */
+
+async function deleteCard(id){
+
+ const character=
+ characters.find(
+  c=>c.id===id
+ );
+
+
+ if(!character){
+  return;
+ }
+
+
+ if(
+  !confirm(
+   `Supprimer ${character.name} ?`
+  )
+ ){
+  return;
+ }
+
+
+ characters=
+ characters.filter(
+  c=>c.id!==id
+ );
+
+
+ await persistCollection();
+
+
+ updateHomeCounts();
+
+ renderFilters();
+
+ renderCarousel();
+
+}
+
+
+/* ==========================================================
+   COMICS
+========================================================== */
+
+function openComics(id){
+
+ const character=
+ characters.find(
+  c=>c.id===id
+ );
+
+
+ if(!character){
+  return;
+ }
+
+
+ document.getElementById(
+  "modalTitle"
+ ).textContent=
+ character.name+
+ " — COMICS";
+
+
+ const list=
+ document.getElementById(
+  "comicsList"
+ );
+
+
+ list.innerHTML="";
+
+
+ if(
+  !character.comics ||
+  !character.comics.length
+ ){
+
+  list.innerHTML=`
+
+   <div class="empty">
+
+    Aucun comic recommandé
+    pour ce personnage.
+
+   </div>
+
+  `;
+
+ }else{
+
+  character.comics.forEach(
+   (comic,index)=>{
+
+    const key=
+     "comic_read_"+
+     character.id+
+     "_"+
+     index;
+
+
+    const read=
+     localStorage.getItem(
+      key
+     )==="true";
+
+
+    const item=
+     document.createElement(
+      "div"
+     );
+
+
+    item.className=
+     "comic";
+
+
+    item.innerHTML=`
+
+     <div class="comic-img">
+
+      ${
+       comic.image
+
+       ?
+
+       `<img
+        src="${escapeAttr(comic.image)}"
+        alt="${escapeAttr(comic.title)}"
+       >`
+
+       :
+
+       `<div class="image-placeholder">
+        AJOUTE TON IMAGE
+       </div>`
+      }
+
+     </div>
+
+
+     <div class="comic-info">
+
+      <div class="comic-title">
+
+       ${escapeHTML(
+        comic.title
+       )}
+
+      </div>
+
+
+      <div class="comic-status">
+
+       <button
+        class="read-btn ${
+         read
+         ?"read"
+         :""
+        }"
+        onclick="
+         toggleRead(
+          '${key}',
+          this
+         )
+        "
+       >
+
+        <span class="eye">
+         ${read?"◉":"○"}
+        </span>
+
+        ${
+         read
+         ?"LU"
+         :"NON LU"
+        }
+
+       </button>
+
+      </div>
+
+     </div>
+
+    `;
+
+
+    list.appendChild(
+     item
+    );
+
+   }
+  );
+
+ }
+
+
+ document
+  .getElementById(
+   "comicModal"
+  )
+  .classList.remove(
+   "hidden"
+  );
+
+}
+
+
+function toggleRead(
+ key,
+ button
+){
+
+ const value=
+ !(
+  localStorage.getItem(
+   key
+  )==="true"
+ );
+
+
+ localStorage.setItem(
+  key,
+  value
+ );
+
+
+ button.classList.toggle(
+  "read",
+  value
+ );
+
+
+ button.innerHTML=`
+
+  <span class="eye">
+   ${value?"◉":"○"}
+  </span>
+
+  ${
+   value
+   ?"LU"
+   :"NON LU"
+  }
+
+ `;
+
+}
+
+
+function closeComicModal(){
+
+ document
+  .getElementById(
+   "comicModal"
+  )
+  .classList.add(
+   "hidden"
+  );
+
+}
+
+
+function closeModalOutside(event){
+
+ if(
+  event.target.id===
+  "comicModal"
+ ){
+
+  closeComicModal();
+
+ }
+
+}
+
+
+/* ==========================================================
+   ESC
+========================================================== */
+
+document.addEventListener(
+ "keydown",
+ event=>{
+
+  if(
+   event.key==="Escape"
+  ){
+
+   closeCardModal();
+
+   closeComicModal();
+
+  }
+
+ }
+);
+
+
+/* ==========================================================
+   UTILITAIRES
+========================================================== */
+
+function escapeHTML(value){
+
+ return String(
+  value??""
+ )
+ .replaceAll(
+  "&",
+  "&amp;"
+ )
+ .replaceAll(
+  "<",
+  "&lt;"
+ )
+ .replaceAll(
+  ">",
+  "&gt;"
+ )
+ .replaceAll(
+  '"',
+  "&quot;"
+ )
+ .replaceAll(
+  "'",
+  "&#039;"
+ );
+
+}
+
+
+function escapeAttr(value){
+
+ return escapeHTML(value);
+
+}
+
+
+/* ==========================================================
+   RESIZE
+========================================================== */
+
+window.addEventListener(
+ "resize",
+ ()=>{
+
+  requestAnimationFrame(
+   ()=>{
+    centerCurrentCard(false);
+   }
+  );
+
+ }
+);
+
+</script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .then(() => {
+        console.log("Application prête !");
+      })
+      .catch(error => {
+        console.error("Erreur PWA :", error);
+      });
+  });
+}
+</script>
+
+</body>
+</html>
